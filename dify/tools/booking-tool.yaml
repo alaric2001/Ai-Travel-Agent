@@ -1,0 +1,83 @@
+# =============================================================
+# Dify.ai Custom Tool Definition — Booking Agent
+# Daftarkan file ini di Dify: Settings > Tools > Custom Tools
+# URL endpoint harus dapat diakses oleh Dify server
+# =============================================================
+
+openapi: 3.1.0
+info:
+  title: Travel Agent — Booking Tool
+  description: Mem-parsing permintaan perjalanan natural language dan memvalidasi pagu karyawan
+  version: 1.0.0
+
+servers:
+  - url: http://api:3001   # Internal Docker network URL
+
+paths:
+  /api/booking/parse:
+    post:
+      operationId: parseBookingRequest
+      summary: Parse input teks kasual menjadi parameter perjalanan terstruktur
+      description: >
+        Menggunakan Gemini API untuk mengekstrak origin, destination, tanggal,
+        dan harga dari teks natural language. Otomatis memvalidasi terhadap pagu golongan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [employeeId, rawInput]
+              properties:
+                employeeId:
+                  type: integer
+                  description: ID karyawan yang membuat permintaan
+                rawInput:
+                  type: string
+                  description: Teks permintaan perjalanan dalam bahasa natural
+                  example: "Mau ke Surabaya besok lusa, balik minggu depan, budget tiket max 1.5 juta"
+      responses:
+        '200':
+          description: Hasil parsing berhasil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parsedPayload:
+                    type: object
+                    description: Hasil parsing JSON dari Gemini
+                  allowanceCheck:
+                    type: object
+                    properties:
+                      passed:
+                        type: boolean
+                      grade:
+                        type: string
+                      flightLimit:
+                        type: integer
+                      hotelLimit:
+                        type: integer
+
+  /api/booking/submissions/{id}/approve:
+    post:
+      operationId: approveBookingDispensation
+      summary: Setujui dispensasi booking yang melebihi pagu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [approverId, note]
+              properties:
+                approverId:
+                  type: integer
+                note:
+                  type: string
