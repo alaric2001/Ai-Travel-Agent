@@ -1,15 +1,13 @@
+import 'dotenv/config';        // HARUS baris pertama — load .env sebelum module lain dibuat
 import 'express-async-errors';
 import express    from 'express';
 import cors       from 'cors';
 import helmet     from 'helmet';
-import dotenv     from 'dotenv';
 import path       from 'path';
 import fs         from 'fs';
 import bookingRoutes from './routes/booking.routes';
 import auditRoutes   from './routes/audit.routes';
 import fuelRoutes    from './routes/fuel.routes';
-
-dotenv.config();
 
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -36,9 +34,8 @@ app.use((_req, res) => {
 });
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error('[ERROR]', err.message);
-  const status = err.message.includes('tidak ditemukan') ? 404 : 500;
-  res.status(status).json({ error: err.message });
+  console.error('[ERROR]', err);
+  res.status(500).json({ error: 'Internal server error', message: err.message });
 });
 
 app.listen(PORT, () => {
