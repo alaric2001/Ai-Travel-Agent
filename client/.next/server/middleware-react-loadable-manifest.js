@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"app\\\\(dashboard)\\\\fuel\\\\page.tsx -> @/components/fuel/RouteMap\":{\"id\":\"app\\\\(dashboard)\\\\fuel\\\\page.tsx -> @/components/fuel/RouteMap\",\"files\":[\"static/chunks/_app-pages-browser_components_fuel_RouteMap_tsx.js\"]}}"

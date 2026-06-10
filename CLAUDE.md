@@ -79,7 +79,7 @@ GOOGLE_MAPS_API_KEY=     # Fuel Agent backend (Distance Matrix API)
 Variabel frontend di `client/.env.local`:
 ```
 NEXT_PUBLIC_API_URL=http://localhost:3001
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=   # Fuel Agent frontend (Maps JS + Places + Directions)
+GOOGLE_MAPS_API_KEY=   # Fuel Agent frontend (Maps JS + Places + Directions)
 ```
 
 Google Maps API yang harus diaktifkan: **Maps JavaScript API**, **Places API**, **Directions API**, **Distance Matrix API**.

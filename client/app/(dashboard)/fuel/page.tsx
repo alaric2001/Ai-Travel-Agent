@@ -22,17 +22,17 @@ const RouteMap = dynamic(() => import('@/components/fuel/RouteMap'), {
 const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
 
 export default function FuelPage() {
-  const [employees, setEmployees]   = useState<Employee[]>([]);
-  const [vehicles,  setVehicles]    = useState<Vehicle[]>([]);
-  const [prices,    setPrices]      = useState<FuelPrice[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [prices, setPrices] = useState<FuelPrice[]>([]);
   const [selectedEmp, setSelectedEmp] = useState<number>(0);
   const [selectedVeh, setSelectedVeh] = useState<number>(0);
-  const [origin, setOrigin]         = useState<LocationPoint | null>(null);
-  const [dest,   setDest]           = useState<LocationPoint | null>(null);
-  const [result,   setResult]       = useState<FuelClaimResult | null>(null);
-  const [loading,  setLoading]      = useState(false);
-  const [error,    setError]        = useState<string | null>(null);
-  const [initErr,  setInitErr]      = useState<string | null>(null);
+  const [origin, setOrigin] = useState<LocationPoint | null>(null);
+  const [dest, setDest] = useState<LocationPoint | null>(null);
+  const [result, setResult] = useState<FuelClaimResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [initErr, setInitErr] = useState<string | null>(null);
 
   useEffect(() => {
     Promise.all([getEmployees(), getVehicles(), getFuelPrices()])
@@ -47,7 +47,7 @@ export default function FuelPage() {
   }, []);
 
   const selectedVehicle = vehicles.find((v) => v.id === selectedVeh);
-  const vehiclePrice    = selectedVehicle
+  const vehiclePrice = selectedVehicle
     ? prices.find((p) => p.fuel_type === selectedVehicle.fuel_type)
     : null;
 
@@ -60,14 +60,14 @@ export default function FuelPage() {
     setResult(null);
     try {
       const data = await createFuelClaim({
-        employeeId:    selectedEmp,
-        vehicleId:     selectedVeh,
-        originLat:     origin!.lat,
-        originLng:     origin!.lng,
-        destLat:       dest!.lat,
-        destLng:       dest!.lng,
+        employeeId: selectedEmp,
+        vehicleId: selectedVeh,
+        originLat: origin!.lat,
+        originLng: origin!.lng,
+        destLat: dest!.lat,
+        destLng: dest!.lng,
         originAddress: origin!.address,
-        destAddress:   dest!.address,
+        destAddress: dest!.address,
       });
       setResult(data);
       // Scroll ke hasil
@@ -169,9 +169,8 @@ export default function FuelPage() {
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
               <p className="text-xs font-semibold text-amber-700 mb-2">Harga BBM Aktif (Juni 2026)</p>
               {prices.map((p) => (
-                <div key={p.fuel_type} className={`flex justify-between text-xs py-0.5 ${
-                  selectedVehicle?.fuel_type === p.fuel_type ? 'font-bold text-amber-900' : 'text-amber-700'
-                }`}>
+                <div key={p.fuel_type} className={`flex justify-between text-xs py-0.5 ${selectedVehicle?.fuel_type === p.fuel_type ? 'font-bold text-amber-900' : 'text-amber-700'
+                  }`}>
                   <span>{p.fuel_type}</span>
                   <span>Rp {p.price_per_liter.toLocaleString('id-ID')}/L</span>
                 </div>
@@ -217,7 +216,7 @@ export default function FuelPage() {
                 <div>
                   <p className="text-2xl mb-2">🗺️</p>
                   <p className="text-sm font-medium text-gray-600">Google Maps API Key belum dikonfigurasi</p>
-                  <p className="text-xs text-gray-400 mt-1">Isi <code className="bg-gray-100 px-1 rounded">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code> di <code>.env</code></p>
+                  <p className="text-xs text-gray-400 mt-1">Isi <code className="bg-gray-100 px-1 rounded">GOOGLE_MAPS_API_KEY</code> di <code>.env</code></p>
                   <p className="text-xs text-gray-400 mt-1">Aktifkan: Maps JS API, Places API, Directions API, Distance Matrix API</p>
                 </div>
               </div>

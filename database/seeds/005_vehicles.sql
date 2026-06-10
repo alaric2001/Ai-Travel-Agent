@@ -11,7 +11,7 @@ INSERT INTO vehicles (vehicle_code, brand, model, vehicle_type, year, license_pl
 ('VH-002', 'Toyota',     'Innova Reborn 2.0', 'MPV',       2021, 'B 5678 DEF', 10.5, 'Pertamax',   'Kendaraan manager ke atas'),
 ('VH-003', 'Honda',      'Brio RS 1.2',       'Hatchback', 2023, 'B 9012 GHI', 14.0, 'Pertalite',  'Kendaraan operasional ringan'),
 ('VH-004', 'Suzuki',     'Ertiga GL 1.5',     'MPV',       2022, 'B 3456 JKL', 12.0, 'Pertalite',  'Kendaraan operasional'),
-('VH-005', 'Mitsubishi', 'Pajero Sport 2.4',  'SUV',       2020, 'B 7890 MNO',  8.5, 'Pertamax',   'Kendaraan dinas eksekutif'),
+('VH-005', 'Mitsubishi', 'Pajero Sport 2.4',  'SUV',       2020, 'B 7890 MNO',  8.5, 'Solar',   'Kendaraan dinas eksekutif'),
 ('VH-006', 'Toyota',     'Rush 1.5 TRD',      'SUV',       2023, 'B 2468 PQR', 12.5, 'Pertalite',  'Kendaraan operasional lapangan'),
 ('VH-007', 'Daihatsu',   'Xenia X 1.3',       'MPV',       2021, 'B 1357 STU', 11.5, 'Pertalite',  'Kendaraan pool kantor'),
 ('VH-008', 'Honda',      'HR-V 1.5 E CVT',    'SUV',       2022, 'B 8642 VWX', 13.0, 'Pertamax',   'Kendaraan supervisor'),
@@ -24,12 +24,12 @@ ON CONFLICT (vehicle_code) DO NOTHING;
 -- Sumber: Pertamina
 -- -----------------------------------------------
 INSERT INTO fuel_prices (fuel_type, price_per_liter, effective_date, source) VALUES
-('Pertalite',       10000,  '2026-01-01', 'Pertamina — SK Harga BBM 2026'),
-('Pertamax',        13500,  '2026-01-01', 'Pertamina — SK Harga BBM 2026'),
-('Pertamax Turbo',  15000,  '2026-01-01', 'Pertamina — SK Harga BBM 2026'),
-('Solar Subsidi',    6800,  '2026-01-01', 'Pertamina — SK Harga BBM 2026'),
-('Dex',             17900,  '2026-01-01', 'Pertamina — SK Harga BBM 2026'),
-('Dexlite',         15400,  '2026-01-01', 'Pertamina — SK Harga BBM 2026')
+('Pertalite',       10000,  '2026-06-10', 'Pertamina — SK Harga BBM 2026'),
+('Pertamax',        16250,  '2026-06-10', 'Pertamina — SK Harga BBM 2026'),
+('Pertamax Turbo',  20750,  '2026-06-10', 'Pertamina — SK Harga BBM 2026'),
+('Dex',             24800,  '2026-06-10', 'Pertamina — SK Harga BBM 2026'),
+('Solar',    6800,  '2026-06-10', 'Pertamina — SK Harga BBM 2026'),
+('Dexlite',         23000,  '2026-06-10', 'Pertamina — SK Harga BBM 2026')
 ON CONFLICT (fuel_type) DO UPDATE SET
     price_per_liter = EXCLUDED.price_per_liter,
     effective_date  = EXCLUDED.effective_date,

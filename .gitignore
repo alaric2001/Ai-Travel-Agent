@@ -1,6 +1,22 @@
+# ── Env & Secrets ─────────────────────────────────────────────
+.env
+.env.local
+client/.env.local
+
+# ── Dependencies ──────────────────────────────────────────────
+node_modules/
+client/node_modules/
+
+# ── Build outputs (generated, never commit) ───────────────────
+dist/
+client/.next/
+client/out/
+
+# ── Uploads (struk foto) ──────────────────────────────────────
 uploads/*
 !uploads/.gitkeep
-node_modules/
-.env
-client/.next
-client/node_modules
+
+# ── OS & Editor ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
