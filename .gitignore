@@ -2,3 +2,5 @@ uploads/*
 !uploads/.gitkeep
 node_modules/
 .env
+client/.next
+client/node_modules

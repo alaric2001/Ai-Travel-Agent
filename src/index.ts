@@ -33,9 +33,11 @@ app.use((_req, res) => {
   res.status(404).json({ error: 'Endpoint tidak ditemukan' });
 });
 
-app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const message = err instanceof Error ? err.message : String(err);
+  const code    = (err as NodeJS.ErrnoException).code;
   console.error('[ERROR]', err);
-  res.status(500).json({ error: 'Internal server error', message: err.message });
+  res.status(500).json({ error: 'Internal server error', message, code });
 });
 
 app.listen(PORT, () => {
