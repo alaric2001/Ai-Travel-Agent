@@ -9,13 +9,17 @@ function fmtRp(n: number) {
   return 'Rp ' + n.toLocaleString('id-ID');
 }
 
-const AIRLINE_LOGOS: Record<string, string> = {
-  'Garuda Indonesia': 'GA',
-  'Citilink':         'QG',
-  'Lion Air':         'JT',
-  'Batik Air':        'ID',
-  'Sriwijaya Air':    'SJ',
+const AIRLINE_CODES: Record<string, string> = {
+  'Garuda Indonesia': 'GA', 'Citilink': 'QG', 'Lion Air': 'JT',
+  'Batik Air': 'ID', 'Sriwijaya Air': 'SJ', 'AirAsia': 'QZ',
+  'TransNusa': 'TN', 'Super Air Jet': 'IU',
 };
+
+function SourceBadge({ source }: { source: 'realtime' | 'mock' }) {
+  return source === 'realtime'
+    ? <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-semibold">● LIVE</span>
+    : <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-400 font-medium">SIMULASI</span>;
+}
 
 export function FlightOptionsGrid({ flights, flightLimit }: FlightGridProps) {
   if (flights.length === 0) return null;
@@ -36,13 +40,22 @@ export function FlightOptionsGrid({ flights, flightLimit }: FlightGridProps) {
           >
             {/* Airline badge */}
             <div className="w-10 h-10 rounded-lg bg-brand-900 text-white flex items-center justify-center text-xs font-bold shrink-0">
-              {AIRLINE_LOGOS[f.airline] || f.airline.slice(0, 2)}
+              {AIRLINE_CODES[f.airline] || f.airline.slice(0, 2).toUpperCase()}
             </div>
 
             {/* Route info */}
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-800 truncate">{f.airline}</div>
-              <div className="text-xs text-gray-500">{f.flightNo} · {f.class} · {f.duration}</div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-medium text-gray-800 truncate">{f.airline}</span>
+                <SourceBadge source={f.source} />
+              </div>
+              <div className="text-xs text-gray-500">
+                {f.flightNo} · {f.class} · {f.duration}
+                {f.stops === 0
+                  ? <span className="ml-1 text-green-600">· Langsung</span>
+                  : <span className="ml-1 text-amber-600">· {f.stops} transit</span>
+                }
+              </div>
             </div>
 
             {/* Times */}
@@ -56,14 +69,12 @@ export function FlightOptionsGrid({ flights, flightLimit }: FlightGridProps) {
               <div className={`text-sm font-bold ${f.withinPagu ? 'text-gray-900' : 'text-red-600'}`}>
                 {fmtRp(f.price)}
               </div>
-              {f.withinPagu ? (
-                <span className="text-xs text-green-600 font-medium">✓ Sesuai pagu</span>
-              ) : (
-                <span className="text-xs text-red-500 font-medium">✕ Melebihi pagu</span>
-              )}
+              {f.withinPagu
+                ? <span className="text-xs text-green-600 font-medium">✓ Sesuai pagu</span>
+                : <span className="text-xs text-red-500 font-medium">✕ Melebihi pagu</span>
+              }
             </div>
 
-            {/* Select button */}
             <button
               disabled={!f.withinPagu}
               className="shrink-0 text-xs px-3 py-1.5 rounded-lg font-medium transition-colors
@@ -101,10 +112,18 @@ export function HotelOptionsGrid({ hotels, hotelLimit }: HotelGridProps) {
                 🏨
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-gray-800">{h.name}</div>
-                <div className="text-xs text-gray-400">{h.location}</div>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {'⭐'.repeat(h.stars)}
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-medium text-gray-800 truncate">{h.name}</span>
+                  <SourceBadge source={h.source} />
+                </div>
+                <div className="text-xs text-gray-400 truncate">{h.location}</div>
+                <div className="flex items-center flex-wrap gap-1 mt-1">
+                  <span>{'⭐'.repeat(Math.min(h.stars, 5))}</span>
+                  {h.rating && (
+                    <span className="text-xs bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-medium">
+                      {h.rating.toFixed(1)} / 5
+                    </span>
+                  )}
                   {h.facilities.slice(0, 3).map((f) => (
                     <span key={f} className="text-xs bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">{f}</span>
                   ))}
@@ -115,11 +134,10 @@ export function HotelOptionsGrid({ hotels, hotelLimit }: HotelGridProps) {
                   {fmtRp(h.pricePerNight)}<span className="text-xs font-normal text-gray-400">/malam</span>
                 </div>
                 <div className="text-xs text-gray-500">{h.nights} malam = {fmtRp(h.totalPrice)}</div>
-                {h.withinPagu ? (
-                  <span className="text-xs text-green-600 font-medium">✓ Sesuai pagu</span>
-                ) : (
-                  <span className="text-xs text-red-500 font-medium">✕ Melebihi pagu</span>
-                )}
+                {h.withinPagu
+                  ? <span className="text-xs text-green-600 font-medium">✓ Sesuai pagu</span>
+                  : <span className="text-xs text-red-500 font-medium">✕ Melebihi pagu</span>
+                }
               </div>
               <button
                 disabled={!h.withinPagu}

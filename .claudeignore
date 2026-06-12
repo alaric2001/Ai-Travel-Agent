@@ -14,13 +14,6 @@ client/out/
 .DS_Store
 Thumbs.db
 
-# ── Environment & Secrets (sensitive) ───────────────────────────
-.env
-.env.local
-.env.*.local
-client/.env.local
-client/.env.*.local
-
 # ── IDE & Editor Config (noise) ─────────────────────────────────
 .vscode/
 .idea/

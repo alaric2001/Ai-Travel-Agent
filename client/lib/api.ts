@@ -29,12 +29,15 @@ export interface MockFlight {
   id: string; airline: string; flightNo: string;
   origin: string; destination: string;
   departureTime: string; arrivalTime: string;
-  price: number; class: string; duration: string; withinPagu: boolean;
+  price: number; class: string; duration: string;
+  stops: number; withinPagu: boolean;
+  source: 'realtime' | 'mock';
 }
 export interface MockHotel {
   id: string; name: string; stars: number; location: string;
   pricePerNight: number; totalPrice: number; nights: number;
-  facilities: string[]; withinPagu: boolean;
+  facilities: string[]; rating: number | null; withinPagu: boolean;
+  source: 'realtime' | 'mock';
 }
 export interface BookingResult {
   submissionId: string; employeeName: string;
@@ -50,7 +53,8 @@ export interface BookingResult {
     requestedFlightPrice: number | null; requestedHotelNights: number | null;
     message: string;
   };
-  mockFlights: MockFlight[]; mockHotels: MockHotel[]; status: string;
+  mockFlights: MockFlight[]; mockHotels: MockHotel[];
+  status: string; dataSource: 'realtime' | 'mock';
 }
 
 // ─────────────────────────────────────────────────────────────────

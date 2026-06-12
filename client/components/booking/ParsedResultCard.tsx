@@ -71,11 +71,11 @@ export default function ParsedResultCard({ result }: Props) {
           />
         </div>
 
-        {p.preferences.length > 0 && (
+        {(p.preferences ?? []).length > 0 && (
           <div className="mt-3 pt-3 border-t border-gray-100">
             <p className="text-xs font-medium text-gray-500 mb-1.5">Preferensi:</p>
             <div className="flex flex-wrap gap-1.5">
-              {p.preferences.map((pref, i) => (
+              {(p.preferences ?? []).map((pref, i) => (
                 <span key={i} className="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">{pref}</span>
               ))}
             </div>
