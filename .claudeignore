@@ -1,0 +1,62 @@
+# ── Dependencies & Build Outputs (generated, huge token cost) ────────
+node_modules/
+client/node_modules/
+dist/
+build/
+client/.next/
+client/out/
+*.lock
+*.log
+
+# ── Version Control & OS ────────────────────────────────────────
+.git/
+.gitignore
+.DS_Store
+Thumbs.db
+
+# ── Environment & Secrets (sensitive) ───────────────────────────
+.env
+.env.local
+.env.*.local
+client/.env.local
+client/.env.*.local
+
+# ── IDE & Editor Config (noise) ─────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.prettierignore
+.eslintignore
+
+# ── Docker & Infrastructure ────────────────────────────────────
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# ── Testing & Coverage ────────────────────────────────────────
+.coverage/
+coverage/
+.nyc_output/
+__tests__/
+__mocks__/
+
+# ── Runtime & Temporary Files ──────────────────────────────────
+uploads/
+tmp/
+temp/
+.tmp/
+.cache/
+*.pid
+
+# ── Documentation (reference only) ────────────────────────────
+docs/old/
+archive/
+*.md.bak
+
+# ── Large Data Files ──────────────────────────────────────────
+*.zip
+*.tar.gz
+*.rar
+database/backups/
